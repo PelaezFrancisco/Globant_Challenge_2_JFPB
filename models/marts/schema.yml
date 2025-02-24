@@ -1,7 +1,6 @@
 version: 2
 
 models:
-  
   - name: kpi_bank_marketing
     description: "Modelo con KPIs de marketing"
     columns:
@@ -9,20 +8,20 @@ models:
         description: "Número total de contactos"
         tests:
           - not_null
-          - greater_than: 
+          - dbt_utils.accepted_range:
               min_value: 0
 
       - name: successful_contacts
         description: "Número total de contactos exitosos"
         tests:
           - not_null
-          - greater_than_or_equal_to: 
+          - dbt_utils.accepted_range:
               min_value: 0
 
       - name: conversion_rate
         description: "Tasa de conversión (%)"
         tests:
           - not_null
-          - between:
+          - dbt_utils.accepted_range:
               min_value: 0
               max_value: 100

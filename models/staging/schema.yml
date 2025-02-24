@@ -8,7 +8,8 @@ models:
         description: "Edad del cliente"
         tests:
           - not_null
-          - integer
+          - dbt_utils.accepted_range:
+              min_value: 1
 
       - name: job
         description: "Ocupación del cliente"

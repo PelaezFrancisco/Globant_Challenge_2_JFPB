@@ -4,7 +4,7 @@ default:
       type: bigquery
       method: oauth
       project: dbt-globant
-      dataset: raw  # Asegúrate de que coincida con el dataset en BigQuery
+      dataset: dbt_fpelaez_globant  # Asegúrate de que coincida con el dataset en BigQuery
       location: us-west1
       threads: 4
   target: dev

@@ -35,7 +35,7 @@ jobs:
                 type: bigquery
                 method: service-account
                 project: dbt-globant
-                dataset: raw
+                dataset: dbt_fpelaez_globant
                 location: us-west1
                 threads: 4
                 keyfile: /tmp/keyfile.json
