@@ -19,7 +19,8 @@ jobs:
           python-version: '3.8'
 
       - name: Set up DBT profiles
-        run: echo "$DB_PROFILE_YML" > ~/.dbt/profiles.yml  # Cargar perfil desde secreto
+        run: mkdir -p ~/.dbt
+          echo "$DB_PROFILE_YML" > ~/.dbt/profiles.yml  # Cargar perfil desde secreto
         env:
           DB_PROFILE_YML: ${{ secrets.DB_PROFILE_YML }} 
 
@@ -33,7 +34,6 @@ jobs:
 
       - name: 🏗️ Configurar DBT Profile
         run: |
-          mkdir -p ~/.dbt
           dbt deps
           echo "default:
             outputs:
