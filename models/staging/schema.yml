@@ -28,13 +28,15 @@ models:
         description: "Número total de contactos"
         tests:
           - not_null
-          - greater_than: 0
+          - greater_than:
+              min_value: 0
 
       - name: successful_contacts
         description: "Número total de contactos exitosos"
         tests:
           - not_null
-          - greater_than_or_equal_to: 0
+          - greater_than_or_equal_to:
+              min_value: 0
 
       - name: conversion_rate
         description: "Tasa de conversión (%)"
