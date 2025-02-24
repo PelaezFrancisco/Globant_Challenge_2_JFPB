@@ -36,6 +36,11 @@ jobs:
       - name: Authenticate with Google Cloud
         run: gcloud auth activate-service-account --key-file=/tmp/keyfile.json
 
+      - name: Listar datasets en BigQuery
+        run: |
+          gcloud config set project dbt-globant
+          gcloud bigquery datasets list
+
       - name: 🏗️ Configurar DBT Profile
         run: |
           dbt deps
