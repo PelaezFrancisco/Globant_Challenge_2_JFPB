@@ -32,6 +32,9 @@ jobs:
         run: echo "$GOOGLE_CREDENTIALS" > /tmp/keyfile.json
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+      
+      - name: Authenticate with Google Cloud
+        run: gcloud auth activate-service-account --key-file=/tmp/keyfile.json
 
       - name: 🏗️ Configurar DBT Profile
         run: |
