@@ -21,27 +21,4 @@ models:
           - accepted_values:
               values: ['success', 'failure', 'nonexistent']
 
-  - name: kpi_bank_marketing
-    description: "Modelo con KPIs de marketing"
-    columns:
-      - name: total_contacts
-        description: "Número total de contactos"
-        tests:
-          - not_null
-          - greater_than:
-              min_value: 0
-
-      - name: successful_contacts
-        description: "Número total de contactos exitosos"
-        tests:
-          - not_null
-          - greater_than_or_equal_to:
-              min_value: 0
-
-      - name: conversion_rate
-        description: "Tasa de conversión (%)"
-        tests:
-          - not_null
-          - between:
-              min_value: 0
-              max_value: 100
+  
