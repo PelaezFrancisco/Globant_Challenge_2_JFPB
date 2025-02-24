@@ -19,8 +19,9 @@ jobs:
           python-version: '3.8'
 
       - name: Set up DBT profiles
-        run: mkdir -p ~/.dbt
-          echo "$DB_PROFILE_YML" > ~/.dbt/profiles.yml  # Cargar perfil desde secreto
+        run: |
+          mkdir -p ~/.dbt
+          echo "$DB_PROFILE_YML" > ~/.dbt/profiles.yml
         env:
           DB_PROFILE_YML: ${{ secrets.DB_PROFILE_YML }} 
 
