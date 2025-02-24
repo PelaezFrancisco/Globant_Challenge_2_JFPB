@@ -29,6 +29,7 @@ jobs:
       - name: 🏗️ Configurar DBT Profile
         run: |
           mkdir -p ~/.dbt
+          dbt deps
           echo "default:
             outputs:
               dev:
