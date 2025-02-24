@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: staging_bank_marketing
+    description: "Modelo staging para la limpieza y normalización de datos de marketing"
+    columns:
+      - name: age
+        description: "Edad del cliente"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 1
+
+      - name: job
+        description: "Ocupación del cliente"
+        tests:
+          - not_null
+
+      - name: poutcome
+        description: "Resultado de la campaña previa"
+        tests:
+          - accepted_values:
+              values: ['success', 'failure', 'nonexistent']
+
+  

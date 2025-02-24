@@ -1,0 +1,52 @@
+name: DBT CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - PelaezFrancisco-patch-1  # O la rama que uses para producción
+  pull_request:
+
+jobs:
+  dbt_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛠️ Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: 📥 Configurar DBT y autenticación en BigQuery
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+
+      - name: Set up DBT profiles
+        run: echo "${{ secrets.DB_PROFILE_YML }}" > ~/.dbt/profiles.yml  # Cargar perfil desde secreto
+
+      - name: 🔹 Instalar DBT
+        run: pip install dbt-bigquery
+
+      - name: 🔑 Configurar credenciales de BigQuery
+        run: echo "$GOOGLE_CREDENTIALS" > /tmp/keyfile.json
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+      - name: 🏗️ Configurar DBT Profile
+        run: |
+          mkdir -p ~/.dbt
+          dbt deps
+          echo "default:
+            outputs:
+              dev:
+                type: bigquery
+                method: service-account
+                project: dbt-globant
+                dataset: dbt_fpelaez_globant
+                location: us-west1
+                threads: 4
+                keyfile: /tmp/keyfile.json
+            target: dev" > ~/.dbt/profiles.yml
+
+      - name: ✅ Ejecutar pruebas unitarias con DBT
+        run: dbt test
+
+      - name: 🚀 Ejecutar y desplegar modelos en BigQuery
+        run: dbt run
