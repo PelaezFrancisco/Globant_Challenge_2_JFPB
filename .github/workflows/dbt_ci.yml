@@ -21,7 +21,7 @@ jobs:
       - name: Set up DBT profiles
         run: echo "$DB_PROFILE_YML" > ~/.dbt/profiles.yml  # Cargar perfil desde secreto
         env:
-          DB_PROFILE_YML: ${{ secrets.DB_PROFILE_YML }}
+          DB_PROFILE_YML: ${{ secrets.DB_PROFILE_YML }} 
 
       - name: 🔹 Instalar DBT
         run: pip install dbt-bigquery
