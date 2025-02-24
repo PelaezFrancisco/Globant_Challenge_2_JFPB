@@ -19,7 +19,9 @@ jobs:
           python-version: '3.8'
 
       - name: Set up DBT profiles
-        run: echo "${{ secrets.DB_PROFILE_YML }}" > ~/.dbt/profiles.yml  # Cargar perfil desde secreto
+        run: echo "$DB_PROFILE_YML" > ~/.dbt/profiles.yml  # Cargar perfil desde secreto
+        env:
+          DB_PROFILE_YML: ${{ secrets.DB_PROFILE_YML }}
 
       - name: 🔹 Instalar DBT
         run: pip install dbt-bigquery
