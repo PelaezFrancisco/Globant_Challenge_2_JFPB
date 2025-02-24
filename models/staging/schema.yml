@@ -1,0 +1,6 @@
+version: 2
+
+models:
+  - name: staging_bank_marketing
+    description: "Modelo staging para bank marketing"
+    materialized: table  # O 'view' si prefieres
