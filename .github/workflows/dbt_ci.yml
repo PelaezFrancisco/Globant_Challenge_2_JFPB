@@ -36,6 +36,12 @@ jobs:
       - name: Authenticate with Google Cloud
         run: gcloud auth activate-service-account --key-file=/tmp/keyfile.json
 
+      - name: Test DBT Connection
+        run: dbt debug --profiles-dir .
+
+      - name: Run DBT Models
+        run: dbt run --profiles-dir .
+
       - name: 🏗️ Configurar DBT Profile
         run: |
           dbt deps
