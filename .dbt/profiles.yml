@@ -1,0 +1,10 @@
+default:
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: dbt-globant
+      dataset: dbt_fpelaez_globant  # Asegúrate de que coincida con el dataset en BigQuery
+      location: us-west1
+      threads: 4
+  target: dev
