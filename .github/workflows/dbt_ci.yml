@@ -35,6 +35,23 @@ jobs:
       
       - name: Authenticate with Google Cloud
         run: gcloud auth activate-service-account --key-file=/tmp/keyfile.json
+      
+      - name: Create profiles.yml
+        run: |
+          mkdir -p ~/.dbt
+          echo "
+          dbt_fpelaez_globant:
+            target: dev
+            outputs:
+              dev:
+                type: bigquery
+                method: service-account
+                project: dbt-globant
+                dataset: dbt_fpelaez_globant
+                location: us-west1
+                threads: 4
+                keyfile: /tmp/keyfile.json
+          " > ~/.dbt/profiles.yml
 
       - name: Test DBT Connection
         run: dbt debug --profiles-dir .
