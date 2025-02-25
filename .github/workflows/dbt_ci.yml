@@ -19,7 +19,11 @@ jobs:
           python-version: '3.8'
 
       - name: Set up DBT profiles
-        run: echo "${{ secrets.DB_PROFILE_YML }}" > ~/.dbt/profiles.yml  # Cargar perfil desde secreto
+        run: |
+          mkdir -p ~/.dbt
+          echo "$DB_PROFILE_YML" > ~/.dbt/profiles.yml
+        env:
+          DB_PROFILE_YML: ${{ secrets.DB_PROFILE_YML }} 
 
       - name: 🔹 Instalar DBT
         run: pip install dbt-bigquery
@@ -28,10 +32,35 @@ jobs:
         run: echo "$GOOGLE_CREDENTIALS" > /tmp/keyfile.json
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+      
+      - name: Authenticate with Google Cloud
+        run: gcloud auth activate-service-account --key-file=/tmp/keyfile.json
+      
+      - name: Create profiles.yml
+        run: |
+          mkdir -p ~/.dbt
+          echo "
+          dbt_fpelaez_globant:
+            target: dev
+            outputs:
+              dev:
+                type: bigquery
+                method: service-account
+                project: dbt-globant
+                dataset: dbt_fpelaez_globant
+                location: us-west1
+                threads: 4
+                keyfile: /tmp/keyfile.json
+          " > ~/.dbt/profiles.yml
+
+      - name: Test DBT Connection
+        run: dbt debug --profiles-dir .
+
+      - name: Install DBT Dependencies
+        run: dbt deps --profiles-dir .
 
       - name: 🏗️ Configurar DBT Profile
         run: |
-          mkdir -p ~/.dbt
           dbt deps
           echo "default:
             outputs:

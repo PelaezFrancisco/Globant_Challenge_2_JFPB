@@ -1,0 +1,11 @@
+default:
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: dbt-globant
+      dataset: dbt_fpelaez_globant
+      location: us-west1
+      threads: 4
+      keyfile: /tmp/keyfile.json
+  target: dev
