@@ -56,6 +56,9 @@ jobs:
       - name: Test DBT Connection
         run: dbt debug --profiles-dir .
 
+      - name: Install DBT Dependencies
+        run: dbt deps --profiles-dir .
+
       - name: Run DBT Models
         run: dbt run --profiles-dir .
 
